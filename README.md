@@ -37,16 +37,16 @@ The results table and bar plot will be saved in the same folder as the script.
 8. Annotate statistically significant differences for Cd4
 
 **Results**
-Cd4 expression is significantly lower in SFB-specific thymic CD4 SP T cells compared to controls
-Notch1, Thy1, Tlr4, and Nod2 show no statistically significant differences
-Fold change, log2 fold change, and adjusted p-values are provided in the results Excel file
-The bar plot visualizes mean expression with individual data points
+Cd4 expression is significantly lower in SFB-specific thymic CD4 SP T cells compared to controls.
+Notch1, Thy1, Tlr4, and Nod2 show no statistically significant differences.
+Fold change, log2 fold change, and adjusted p-values are provided in the results Excel file.
+The bar plot visualizes mean expression with individual data points.
 
 **References**
-Gene roles in thymic T cell development: Cd4, Cd8, Notch1, Thy1
-Microbiota recognition pathways: Tlr4, Nod2
-GEO dataset: [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE171279]
-Python libraries: pandas, numpy, scipy, statsmodels, matplotlib, seaborn
+Gene roles in thymic T cell development: Cd4, Cd8, Notch1, Thy1.
+Microbiota recognition pathways: Tlr4, Nod2.
+GEO dataset: [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE171279].
+Python libraries: pandas, numpy, scipy, statsmodels, matplotlib, seaborn.
 
 **Notes**
 Ensure the sample columns in your data match the names defined in the script (B6CTRL1-5, TETRAMER_1-3). Adjust if necessary.
