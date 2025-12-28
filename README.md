@@ -21,7 +21,9 @@ Install dependencies using pip if needed: pip3 install pandas numpy scipy statsm
 **Usage**
 
 Place the RNA-seq data file (CSV or Excel) in the same folder as the script. The script automatically detects the first CSV/XLS/XLSX file.
+
 Run the script: python thymus_cd4_rnaseq_analysis.py
+
 The results table and bar plot will be saved in the same folder as the script.
 
 **Analysis Workflow**
