@@ -1,5 +1,6 @@
 # SFB_CD4_RNAseq=
 _RNA-seq Analysis of SFB-Specific vs Non-Specific Thymic CD4 Single-Positive T Cells_
+
 **This repository contains code for analyzing publicly available RNA-seq data to compare gene expression in SFB-specific versus non-specific thymic CD4 single-positive (SP) T cells in Mus musculus. The analysis focuses on key genes involved in thymic T cell development (Cd4, Cd8, Notch1, Thy1) and microbiota recognition pathways (Tlr4, Nod2). Differential expression between groups was assessed using Welch’s t-tests with Benjamini-Hochberg correction for multiple testing.**
 
 **Data Source**: The RNA-seq dataset was obtained from the Gene Expression Omnibus (GEO) database (accession number: GSE171279). The dataset includes normalized counts for:
