@@ -1,5 +1,5 @@
 # SFB_CD4_RNAseq=
-_RNA-seq Analysis of SFB-Specific vs Non-Specific Thymic CD4 Single-Positive T Cells_
+RNA-seq Analysis of SFB-Specific vs Non-Specific Thymic CD4 Single-Positive T Cells
 
 **This repository contains code for analyzing publicly available RNA-seq data to compare gene expression in SFB-specific versus non-specific thymic CD4 single-positive (SP) T cells in Mus musculus. The analysis focuses on key genes involved in thymic T cell development (Cd4, Cd8, Notch1, Thy1) and microbiota recognition pathways (Tlr4, Nod2). Differential expression between groups was assessed using Welch’s t-tests with Benjamini-Hochberg correction for multiple testing.**
 
@@ -15,6 +15,7 @@ Install dependencies using pip if needed: pip3 install pandas numpy scipy statsm
 
 "thymus_cd4_rnaseq_analysis.py" — Main script performing the differential expression analysis and generating plots.
 "thymus_gene_analysis_results.xlsx" — Output Excel file containing ID, gene symbol, B6CTRL#, TETRAMER#, mean expression, detectability, fold change, log2 fold change, raw p-values, adjusted p-values, and significance.
+
 "thymus_gene_plot.png" — Generated figure showing normalized expression values with individual biological replicates.
 
 **Usage**
