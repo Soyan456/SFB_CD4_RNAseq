@@ -7,7 +7,7 @@ _RNA-seq Analysis of SFB-Specific vs Non-Specific Thymic CD4 Single-Positive T C
 2. Non-specific (control) thymic CD4 T cells
 (Each sample represents pooled thymic tissue from ten mice.)
 
-**Requirements / Dependencies**: The code was written in Python 3.x and uses the following libraries: pandas, numpy, scipy, statsmodels, matplotlib, seaborn, pathlib
+**Requirements / Dependencies**: The code was written in Python 3.12.10 and uses the following libraries: pandas, numpy, scipy, statsmodels, matplotlib, seaborn, pathlib
 Install dependencies using pip if needed: pip3 install pandas numpy scipy statsmodels matplotlib seaborn
 
 **Files**
