@@ -18,7 +18,7 @@ if file_path.suffix.lower() == '.csv':
 else:
 	df = pd.read_excel(file_path, header=1)
 # Filter for our genes of interest
-genes_of_interest = ['Notch1', 'Thy1', 'Cd4', 'Cd8', 'Tlr4', 'Nod2']
+genes_of_interest = ['Notch1', 'Thy1', 'Cd4', 'Tlr4', 'Nod2']
 
 # Auto-detect gene column (robust to 'Gene Symbol' vs 'GeneSymbol' etc.)
 possible_names = {'gene symbol', 'gene_symbol', 'genesymbol', 'gene', 'gene_name', 'symbol', 'gene name'}
