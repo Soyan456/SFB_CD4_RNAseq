@@ -1,7 +1,7 @@
 # SFB_CD4_RNAseq=
 RNA-seq Analysis of SFB-Specific vs Non-Specific Thymic CD4 Single-Positive T Cells
 
-**This repository contains code for analyzing publicly available RNA-seq data to compare gene expression in SFB-specific versus non-specific thymic CD4 single-positive (SP) T cells in Mus musculus. The analysis focuses on key genes involved in thymic T cell development (Cd4, Cd8, Notch1, Thy1) and microbiota recognition pathways (Tlr4, Nod2). Differential expression between groups was assessed using Welch’s t-tests with Benjamini-Hochberg correction for multiple testing.**
+**This repository contains code for analyzing publicly available RNA-seq data to compare gene expression in SFB-specific versus non-specific thymic CD4 single-positive (SP) T cells in Mus musculus. The analysis focuses on key genes involved in thymic T cell development (Cd4, Notch1, Thy1) and microbiota recognition pathways (Tlr4, Nod2). Differential expression between groups was assessed using Welch’s t-tests with Benjamini-Hochberg correction for multiple testing.**
 
 **Data Source**: The RNA-seq dataset was obtained from the Gene Expression Omnibus (GEO) database (accession number: GSE171279). The dataset includes normalized counts for:
 1. SFB-tetramer–positive thymic CD4 T cells
@@ -27,9 +27,9 @@ Run the script: python thymus_cd4_rnaseq_analysis.py
 The results table and bar plot will be saved in the same folder as the script.
 
 **Analysis Workflow**
-1. Filter genes of interest: Cd4, Cd8, Notch1, Thy1, Tlr4, Nod2
+1. Filter genes of interest: Cd4, Notch1, Thy1, Tlr4, Nod2
 2. Calculate mean expression for control and SFB-specific groups
-3. Determine detectability (mean expression > 1)
+3. Determine detectability (mean expression > 1) and filter
 4. Calculate fold change and log2 fold change
 5. Perform Welch’s two-sample t-test
 6. Adjust p-values using Benjamini-Hochberg correction
