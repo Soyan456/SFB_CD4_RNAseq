@@ -18,7 +18,7 @@ if file_path.suffix.lower() == '.csv':
 else:
 	df = pd.read_excel(file_path, header=1)
 # Filter for our genes of interest
-genes_of_interest = ['Notch1', 'Thy1', 'Cd4', 'Tlr4', 'Nod2']
+genes_of_interest = ['Notch1', 'Thy1', 'Cd4', 'Cd8', 'Tlr4', 'Nod2']
 
 # Auto-detect gene column (robust to 'Gene Symbol' vs 'GeneSymbol' etc.)
 possible_names = {'gene symbol', 'gene_symbol', 'genesymbol', 'gene', 'gene_name', 'symbol', 'gene name'}
@@ -57,6 +57,8 @@ df_filtered['mean_TET'] = df_filtered[tet_present].apply(pd.to_numeric, errors='
 df_filtered['detectable'] = (
     (df_filtered['mean_CTRL'] > 1) | (df_filtered['mean_TET'] > 1)
 )
+#Apply detectability filter
+df_filtered = df_filtered[df_filtered['detectable']].copy()
 
 # Fold Change Calculation
 df_filtered['Fold_Change'] = df_filtered['mean_TET'] / df_filtered['mean_CTRL']
