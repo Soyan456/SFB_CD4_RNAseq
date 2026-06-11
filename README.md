@@ -27,7 +27,7 @@ Run the script: python thymus_cd4_rnaseq_analysis.py
 The results table and bar plot will be saved in the same folder as the script.
 
 **Analysis Workflow**
-1. Filter genes of interest: Cd4, Notch1, Thy1, Tlr4, Nod2
+1. Filter genes of interest: Cd4, Notch1, Thy1, Tlr4, Nod2, Gapdh, Oaz1, Tbp
 2. Calculate mean expression for control and SFB-specific groups
 3. Determine detectability (mean expression > 1) and filter
 4. Calculate fold change and log2 fold change
@@ -39,16 +39,17 @@ The results table and bar plot will be saved in the same folder as the script.
 **Results**
 Cd4 expression is significantly lower in SFB-specific thymic CD4 SP T cells compared to controls.
 Notch1, Thy1, Tlr4, and Nod2 show no statistically significant differences.
+Gapdh shows no statistically significant difference, Oaz1 and Tbp display nominally significant differences
 Fold change, log2 fold change, and adjusted p-values are provided in the results Excel file.
 The bar plot visualizes mean expression with individual data points.
 
 **References**
 Gene roles in thymic T cell development: Cd4, Cd8, Notch1, Thy1.
 Microbiota recognition pathways: Tlr4, Nod2.
+Control genes: Gapdh, Oaz1, Tbp
 GEO dataset: [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE171279].
-Python libraries: pandas, numpy, scipy, statsmodels, matplotlib, seaborn.
+Python libraries: pandas, numpy, scipy, statsmodels, matplotlib.
 
 **Notes**
 Ensure the sample columns in your data match the names defined in the script (B6CTRL1-5, TETRAMER_1-3). Adjust if necessary.
 Only the first Excel/CSV file in the folder will be processed.
-CD8 gene is not included in the dataset, so it is not analyzed in this script.
