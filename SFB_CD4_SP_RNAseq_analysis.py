@@ -59,7 +59,7 @@ df_filtered['Fold_Change'] = df_filtered['mean_TET'] / df_filtered['mean_CTRL']
 df_filtered['log2FC'] = np.log2(df_filtered['Fold_Change'].replace(0, np.nan))
 
 # T-test and BH correction on genes of interest only
-genes_of_interest = ['Cd4', 'Notch1', 'Thy1', 'Tlr4', 'Nod2', 'Gapdh']
+genes_of_interest = ['Cd4', 'Notch1', 'Thy1', 'Tlr4', 'Nod2', 'Gapdh', 'Oaz1', 'Tbp']
 
 mask_goi = df_filtered[gene_col].str.lower().isin([g.lower() for g in genes_of_interest])
 df_filtered = df_filtered[mask_goi].copy()
@@ -87,9 +87,9 @@ print(f"Loaded: {file_path.name}")
 
 # ── PLOTTING ────────────────────────────────────────────────────────────────
 
-genes_order = ['Cd4', 'Notch1', 'Thy1', 'Tlr4', 'Nod2', 'Gapdh']
-ctrl_label  = 'Non-specific CD4 SP (B6CTRL)'
-tet_label   = 'SFB-specific CD4 SP (TETRAMER)'
+genes_order = ['Cd4', 'Notch1', 'Thy1', 'Tlr4', 'Nod2', 'Gapdh', 'Oaz1', 'Tbp']
+ctrl_label  = 'Non-specific CD4 SP'
+tet_label   = 'SFB-specific CD4 SP'
 palette = {ctrl_label: '#89ABD9', tet_label: '#DD8452'}
 
 # Build plot dataframe (ctrl=1 baseline, tet=fold change)
@@ -121,68 +121,57 @@ for group, offset in {ctrl_label: -width/2, tet_label: width/2}.items():
     ]
     ax.bar(x + offset, values, width, label=group, color=palette[group], alpha=0.85, zorder=2)
 
-# Draw individual sample points
+# Individual points — remove clip to preserve real outliers
 for i, gene in enumerate(genes_order):
     match = df_filtered[df_filtered[gene_col].str.lower() == gene.lower()]
     if match.empty:
         continue
     row = match.iloc[0]
-    fc  = row['Fold_Change']
-    if pd.isna(fc) or np.isinf(fc):
+    if pd.isna(row['Fold_Change']) or np.isinf(row['Fold_Change']):
         continue
-
-    ctrl_vals      = row[ctrl_present].astype(float).values
-    ctrl_normed    = np.clip(ctrl_vals / row['mean_CTRL'], 0, 4)
+    ctrl_normed = row[ctrl_present].astype(float).values / row['mean_CTRL']
     ax.scatter(
         np.full(len(ctrl_normed), i - width/2) + np.random.uniform(-0.05, 0.05, len(ctrl_normed)),
         ctrl_normed, color='black', s=20, zorder=3, alpha=0.7
     )
-
-    tet_vals    = row[tet_present].astype(float).values
-    tet_normed  = np.clip(tet_vals / row['mean_CTRL'], 0, 4)
+    tet_normed = row[tet_present].astype(float).values / row['mean_CTRL']
     ax.scatter(
         np.full(len(tet_normed), i + width/2) + np.random.uniform(-0.05, 0.05, len(tet_normed)),
         tet_normed, color='black', s=20, zorder=3, alpha=0.7
     )
 
-# Significance annotations
+# Build sig_genes dictionary
 sig_genes = {}
 for i, gene in enumerate(genes_order):
     match = df_filtered[df_filtered[gene_col].str.lower() == gene.lower()]
     if not match.empty and match.iloc[0]['significant']:
         sig_genes[gene] = (i, match.iloc[0])
 
-plt.draw()
-y_max = ax.get_ylim()[1]
-
+# Dynamic bracket height per gene
 for gene, (i, row) in sig_genes.items():
     p_adj = row['p_adj']
     stars = '***' if p_adj < 0.001 else '**' if p_adj < 0.01 else '*'
-    
-    ctrl_x   = x[i] - width/2   # center of blue bar
-    tet_x    = x[i] + width/2   # center of orange bar
-    bar_top  = max(1, row['Fold_Change'])
-    bracket_y = 1.22
-    
-    # Draw horizontal bracket line spanning both bars
+    ctrl_x  = x[i] - width/2
+    tet_x   = x[i] + width/2
+    bracket_y = max(1, row['Fold_Change']) + 0.15
     ax.plot([ctrl_x, tet_x], [bracket_y, bracket_y], color='black', linewidth=1.2)
-    # Short vertical ticks at each end
     ax.plot([ctrl_x, ctrl_x], [bracket_y - 0.03, bracket_y], color='black', linewidth=1.2)
     ax.plot([tet_x,  tet_x],  [bracket_y - 0.03, bracket_y], color='black', linewidth=1.2)
-    # Stars centered above the bracket midpoint
     ax.text(
         (ctrl_x + tet_x) / 2, bracket_y + 0.02, stars,
-        ha='center', va='bottom',
-        fontsize=20, fontweight='bold', color='black'
+        ha='center', va='bottom', fontsize=20, fontweight='bold', color='black'
     )
-    
-# Axis labels — italicised, first letter uppercase
-italic_labels = [rf'$\it{{{g[0].upper() + g[1:]}}}$' for g in genes_order]
+
+# Ensure asterisks aren't clipped
+ax.set_ylim(bottom=0, top=max(ax.get_ylim()[1], 1.6))
+
+# Axis labels — italicised via \mathit for full symbol including numbers
+italic_labels = [rf'$\mathit{{{g[0].lower() + g[1:]}}}$' for g in genes_order]
 ax.set_xticks(x)
 ax.set_xticklabels(italic_labels, fontsize=14)
 ax.set_xlabel('Gene', fontsize=16)
 ax.set_ylabel('Fold Change vs Control', fontsize=16)
-ax.set_title('Thymic Gene Expression: SFB-Specific vs Non-Specific CD4 SP T Cells', fontsize=14)
+ax.set_title('Thymic gene expression: SFB-specific vs Non-specific CD4 SP T Cells', fontsize=14)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 ax.spines['left'].set_visible(True)
